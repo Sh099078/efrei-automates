@@ -6,7 +6,7 @@
 class Automaton {
   public:
     Automaton(int, int, int, std::vector<int>, std::vector<int>,
-        std::vector<std::vector<char>>);
+        std::vector<std::vector<int>>);
     std::string toString();
   private:
     int nb_symbols_;
@@ -14,5 +14,9 @@ class Automaton {
     int nb_transitions_;
     std::vector<int> entries_;
     std::vector<int> exits_;
-    std::vector<std::vector<char>> transitions_;
+    std::vector<std::vector<int>> transitions_;
 };
+
+// ascii(67) : g
+// transitions_[3][67] : arrival state from begin state 3 after getting
+// symbol (67 - 'a'). -1 if that transition doesn't exist.

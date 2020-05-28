@@ -23,17 +23,17 @@ Automaton readAutomaton(const char* pathname) {
   }
   file >> nb_transitions;
   // Building the bidimensionnal transitions matrix:
-  std::vector<std::vector<char>> transitions(states);
+  std::vector<std::vector<int>> transitions(states);
   for (auto it = transitions.begin(); it != transitions.end(); it++) {
-    *it = std::vector<char>(states);
+    *it = std::vector<int>(symbols);
     for (auto jt = (*it).begin(); jt != (*it).end(); jt++)
-      *jt = '\0';
+      *jt = -1;
   }
   // Filling matrix with automaton transitions:
   int begin, end;
   char symbol;
   while (file >> begin >> end >> symbol) {
-    transitions[begin][end] = symbol;
+    transitions[begin][symbol - 'a'] = end;
   }
   return Automaton { symbols, states, nb_transitions, entries, exits, transitions };
 }
