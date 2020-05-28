@@ -1,0 +1,29 @@
+[USE]
+
+To build the project :
+  * make [all]
+To clean temporary files :
+  * make clean
+
+[TEXT FILE FORMAT]
+
+Automatons format in text files :
+  * line 1 : number of symbols in the alphabet.
+  * line 2 : number of states.
+  * line 3 : number of initial states.
+  * line 4 : list of initial states numbers.
+  * line 5 : number of transitions.
+  * From line 6 : one transition per line : [BEGIN_STATE] [END_STATE] [SYMBOL]
+  * Epsilon transitions use the '*' symbol.
+  * BEGIN_STATE, END_STATE and SYMBOL are separated by a single whitespace.
+
+[PROJECT STRUCTURE]
+
+Project structure :
+  ./headers : source files headers (.hh).
+  ./src : source cpp code (.cc).
+  ./testing : test files, such as automatons recorded in text files.
+
+[VERSIONING]
+
+Project git : git@github.com:Sh099078/efrei-automates.git
