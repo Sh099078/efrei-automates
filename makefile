@@ -10,7 +10,7 @@ EXE = a.out
 all: $(EXE)
 
 $(EXE) : $(SRC)
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE) $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(INCLUDE) $^ -o $@
 
 clean:
 	rm -rf $(EXE) *.o
