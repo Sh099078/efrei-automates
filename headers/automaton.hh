@@ -3,9 +3,9 @@
 #include <vector>
 #include <string>
 
-class automaton {
+class Automaton {
   public:
-    automaton(int, int, int, std::vector<std::vector<char>>);
+    Automaton(int, int, int, std::vector<std::vector<char>>);
     std::string toString();
   private:
     int nb_symbols_;
