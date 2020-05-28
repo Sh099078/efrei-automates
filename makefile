@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++2a -Wall -Wextra -Werror -g
+CXXFLAGS = -std=c++2a -pedantic -Wall -Wextra -Werror -g
 VPATH = src
 INCLUDE = headers
 SRC = main.cc automaton.cc read-automaton.cc
