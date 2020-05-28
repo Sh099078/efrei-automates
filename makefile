@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++2a -Wall -Wextra -Werror -g
 VPATH = src
 INCLUDE = headers
-SRC = main.cc
+SRC = main.cc automaton.cc
 EXE = a.out
 
 .PHONY: all clean
