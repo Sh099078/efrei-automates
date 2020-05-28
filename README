@@ -10,10 +10,11 @@ To clean temporary files :
 Automatons format in text files :
   * line 1 : number of symbols in the alphabet.
   * line 2 : number of states.
-  * line 3 : number of initial states.
-  * line 4 : list of initial states numbers.
-  * line 5 : number of transitions.
-  * From line 6 : one transition per line : [BEGIN_STATE] [END_STATE] [SYMBOL]
+  * line 3 : number of initial states, number of terminal states.
+  * line 4 : initial states list.
+  * line 5 : terminal states list.
+  * line 6 : number of transitions.
+  * From line 7 : one transition per line : [BEGIN_STATE] [END_STATE] [SYMBOL]
   * Epsilon transitions use the '*' symbol.
   * BEGIN_STATE, END_STATE and SYMBOL are separated by a single whitespace.
 
