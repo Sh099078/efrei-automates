@@ -33,7 +33,7 @@ Automaton readAutomaton(const char* pathname) {
   int begin, end;
   char symbol;
   while (file >> begin >> end >> symbol) {
-    auto end_states = transitions[begin][symbol - 'a'];
+    auto& end_states = transitions[begin][symbol - 'a'];
     auto pos = std::upper_bound(end_states.begin(), end_states.end(), end);
     transitions[begin][symbol - 'a'].insert(pos, end);
   }

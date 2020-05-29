@@ -35,7 +35,7 @@ bool Automaton::addTransition(int begin, char symbol, int end) {
   return true;
 }
 bool Automaton::removeTransition(int begin, char symbol, int end) {
-  auto end_states = transitions_[begin][symbol - 'a'];
+  auto& end_states = transitions_[begin][symbol - 'a'];
   auto pos = std::find(end_states.begin(), end_states.end(), end);
   if (!nb_transitions_ || pos == end_states.end())
     return false; // Transition doesn't exist
