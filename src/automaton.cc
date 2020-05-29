@@ -59,13 +59,14 @@ int Automaton::addState(bool initial, bool terminal) {
 }
 
 std::string Automaton::toString() {
-  int padding = 6;
+  int padding = 8;
   int most_digits = int_length(std::max({nb_symbols_, nb_states_, 10}));
   std::string str{};
-  str += std::string(most_digits + padding, ' ');
+  str += std::string(padding, ' ');
+  padding = 9;
   for (int i = 0; i < nb_symbols_; i++) {
     str.push_back('a' + i);
-    str += std::string(most_digits, ' ');
+    str += std::string(padding, ' ');
   }
   str += '\n';
   for (auto i = transitions_.begin(); i != transitions_.end(); i++) {
@@ -95,9 +96,9 @@ std::string Automaton::toString() {
       auto end_states = *j;
       std::string end;
       if (end_states.size() == 0)
-        end = "x";
+        end = "  x  ";
       else {
-        end += '{';
+        end += "{ ";
         for (auto it = end_states.begin(); it != end_states.end(); it++) {
           //Concatenate end states:
           end += std::to_string(*it) + " ";
