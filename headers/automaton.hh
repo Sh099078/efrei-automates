@@ -12,7 +12,7 @@ class Automaton {
     bool removeTransition(int begin, char symbol, int end);
     int addState(bool, bool);
     std::string toString();
-  private:
+  public:
     int nb_symbols_;
     int nb_states_;
     int nb_transitions_;
