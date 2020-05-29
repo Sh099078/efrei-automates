@@ -33,6 +33,7 @@ bool Automaton::addTransition(int begin, char symbol, int end) {
 bool Automaton::removeTransition(int begin, char symbol, int end) {
   if (!nb_transitions_ || transitions_[begin][symbol - 'a'] != end)
     return false; // Transition doesn't exist
+  transitions_[begin][symbol - 'a'] = -1;
   nb_transitions_--;
   return true;
 }
