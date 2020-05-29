@@ -22,9 +22,9 @@ int int_length(int i) {
 }
 
 bool Automaton::addTransition(int begin, char symbol, int end) {
-  if (std::clamp(begin, 0, nb_transitions_ - 1)
-      || std::clamp(symbol - 'a', 0, nb_symbols_ - 1)
-      || std::clamp(end, 0, nb_transitions_ - 1))
+  if (begin != std::clamp(begin, 0, std::max(0, nb_states_ - 1))
+      || symbol - 'a' != std::clamp(symbol - 'a', 0, nb_symbols_ - 1)
+      || end != std::clamp(end, 0, std::max(0, nb_states_ - 1)))
     return false; // Index out of range
   transitions_[begin][symbol - 'a'] = end;
   nb_transitions_++;
