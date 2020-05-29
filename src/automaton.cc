@@ -55,7 +55,7 @@ int Automaton::addState(bool initial, bool terminal) {
     entries_.push_back(nb_states_ - 1);
   if (terminal)
     exits_.push_back(nb_states_ - 1);
-  return nb_states_;
+  return nb_states_ - 1;
 }
 
 std::string Automaton::toString() {
