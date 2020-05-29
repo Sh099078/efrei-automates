@@ -9,8 +9,8 @@ Automaton readAutomaton(const char* pathname) {
   std::ifstream file(pathname);
   // Retrieving automaton metadata:
   file >> symbols >> states >> nb_entries >> nb_exits;
-  std::vector<int> entries{ nb_entries };
-  std::vector<int> exits{ nb_exits };
+  auto entries = std::vector<int>();
+  auto exits = std::vector<int>();
   for (int i = 0; i < nb_entries ; i++) {
     int entry;
     file >> entry;
