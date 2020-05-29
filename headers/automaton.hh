@@ -6,7 +6,7 @@
 class Automaton {
   public:
     Automaton(int, int, int, std::vector<int>, std::vector<int>,
-        std::vector<std::vector<int>>);
+        std::vector<std::vector<std::vector<int>>>);
     Automaton(int symbols);
     bool addTransition(int begin, char symbol, int end);
     bool removeTransition(int begin, char symbol, int end);
@@ -18,7 +18,7 @@ class Automaton {
     int nb_transitions_;
     std::vector<int> entries_;
     std::vector<int> exits_;
-    std::vector<std::vector<int>> transitions_;
+    std::vector<std::vector<std::vector<int>>> transitions_;
 };
 
 // ascii(67) : g

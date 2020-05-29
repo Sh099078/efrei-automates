@@ -1,20 +1,21 @@
 #include <algorithm>
+#include <iterator>
 
 #include "automaton.hh"
 
 Automaton::Automaton(int symbols, int states, int nb_transitions,
    std::vector<int> entries, std::vector<int> exits,
-   std::vector<std::vector<int>> transitions)
+   std::vector<std::vector<std::vector<int>>> transitions)
   : nb_symbols_{symbols}, nb_states_{states}, nb_transitions_{nb_transitions},
     entries_{entries}, exits_{exits}, transitions_{transitions} { }
 
 Automaton::Automaton(int symbols) {
   nb_symbols_ = symbols;
-  entries_ = std::vector<int>();
-  exits_ = std::vector<int>();
   nb_states_ = 0;
   nb_transitions_ = 0;
-  transitions_ = std::vector<std::vector<int>>();
+  entries_ = std::vector<int>(0);
+  exits_ = std::vector<int>(0);
+  transitions_ = std::vector<std::vector<std::vector<int>>>(0);
 }
 
 int int_length(int i) {
@@ -26,23 +27,29 @@ bool Automaton::addTransition(int begin, char symbol, int end) {
       || symbol - 'a' != std::clamp(symbol - 'a', 0, nb_symbols_ - 1)
       || end != std::clamp(end, 0, std::max(0, nb_states_ - 1)))
     return false; // Index out of range
-  transitions_[begin][symbol - 'a'] = end;
+  auto end_states = transitions_[begin][symbol - 'a'];
+  auto pos = std::upper_bound(end_states.begin(), end_states.end(), end);
+  if (pos == end_states.begin() || *std::prev(pos, 1) != end)
+    transitions_[begin][symbol - 'a'].insert(pos, end);
   nb_transitions_++;
   return true;
 }
 bool Automaton::removeTransition(int begin, char symbol, int end) {
-  if (!nb_transitions_ || transitions_[begin][symbol - 'a'] != end)
+  auto end_states = transitions_[begin][symbol - 'a'];
+  auto pos = std::find(end_states.begin(), end_states.end(), end);
+  if (!nb_transitions_ || pos == end_states.end())
     return false; // Transition doesn't exist
-  transitions_[begin][symbol - 'a'] = -1;
+  end_states.erase(pos);
   nb_transitions_--;
   return true;
 }
 
 int Automaton::addState(bool initial, bool terminal) {
   nb_states_++;
-  std::vector<int> new_state(nb_symbols_);
-  for (auto it = new_state.begin(); it != new_state.end(); it++)
-    *it = -1;
+  std::vector<std::vector<int>> new_state(nb_symbols_);
+  for (auto it = new_state.begin(); it != new_state.end(); it++) {
+    *it = std::vector<int>(0);
+  }
   transitions_.push_back(new_state);
   if (initial)
     entries_.push_back(nb_states_ - 1);
@@ -84,7 +91,21 @@ std::string Automaton::toString() {
     str += std::string(most_digits - int_length(current_state), ' ');
     // Display the state transitions:
     for (auto j = (*i).begin(); j != (*i).end(); j++) {
-      str += std::string(most_digits - int_length(*j) + 1, ' ') + std::to_string(*j);
+      padding = 10;
+      auto end_states = *j;
+      std::string end;
+      if (end_states.size() == 0)
+        end = "x";
+      else {
+        end += '{';
+        for (auto it = end_states.begin(); it != end_states.end(); it++) {
+          //Concatenate end states:
+          end += std::to_string(*it) + " ";
+        }
+        end += '}';
+      }
+      str += end;
+      str += std::string(padding - end.size(), ' ');
     }
     str = str + '\n';
   }
