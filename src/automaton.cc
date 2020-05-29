@@ -8,12 +8,50 @@ Automaton::Automaton(int symbols, int states, int nb_transitions,
   : nb_symbols_{symbols}, nb_states_{states}, nb_transitions_{nb_transitions},
     entries_{entries}, exits_{exits}, transitions_{transitions} { }
 
+Automaton::Automaton(int symbols) {
+  nb_symbols_ = symbols;
+  entries_ = std::vector<int>();
+  exits_ = std::vector<int>();
+  nb_states_ = 0;
+  nb_transitions_ = 0;
+  transitions_ = std::vector<std::vector<int>>();
+}
+
 int int_length(int i) {
   return std::to_string(i).length();
 }
 
+bool Automaton::addTransition(int begin, char symbol, int end) {
+  if (std::clamp(begin, 0, nb_transitions_ - 1)
+      || std::clamp(symbol - 'a', 0, nb_symbols_ - 1)
+      || std::clamp(end, 0, nb_transitions_ - 1))
+    return false; // Index out of range
+  transitions_[begin][symbol - 'a'] = end;
+  nb_transitions_++;
+  return true;
+}
+bool Automaton::removeTransition(int begin, char symbol, int end) {
+  if (!nb_transitions_ || transitions_[begin][symbol - 'a'] != end)
+    return false; // Transition doesn't exist
+  nb_transitions_--;
+  return true;
+}
+
+int Automaton::addState(bool initial, bool terminal) {
+  nb_states_++;
+  std::vector<int> new_state(nb_symbols_);
+  for (auto it = new_state.begin(); it != new_state.end(); it++)
+    *it = -1;
+  transitions_.push_back(new_state);
+  if (initial)
+    entries_.push_back(nb_states_);
+  if (terminal)
+    exits_.push_back(nb_states_);
+  return nb_states_;
+}
+
 std::string Automaton::toString() {
-  int padding = 3;
+  int padding = 5;
   int most_digits = int_length(std::max({nb_symbols_, nb_states_, 10}));
   std::string str{};
   str += std::string(most_digits + padding, ' ');
@@ -39,6 +77,10 @@ std::string Automaton::toString() {
       padding--;
     }
     str += std::string(padding, ' ');
+    //Display the state number:
+    int current_state = std::distance(transitions_.begin(), i);
+    str += std::to_string(current_state);
+    str += std::string(most_digits - int_length(current_state), ' ');
     // Display the state transitions:
     for (auto j = (*i).begin(); j != (*i).end(); j++) {
       str += std::string(most_digits - int_length(*j) + 1, ' ') + std::to_string(*j);

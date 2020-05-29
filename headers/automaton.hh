@@ -7,6 +7,10 @@ class Automaton {
   public:
     Automaton(int, int, int, std::vector<int>, std::vector<int>,
         std::vector<std::vector<int>>);
+    Automaton(int symbols);
+    bool addTransition(int begin, char symbol, int end); //TODO
+    bool removeTransition(int begin, char symbol, int end); //TODO
+    int addState(bool, bool); //TODO
     std::string toString();
   private:
     int nb_symbols_;
