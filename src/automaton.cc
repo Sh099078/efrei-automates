@@ -27,7 +27,7 @@ bool Automaton::addTransition(int begin, char symbol, int end) {
       || symbol - 'a' != std::clamp(symbol - 'a', 0, nb_symbols_ - 1)
       || end != std::clamp(end, 0, std::max(0, nb_states_ - 1)))
     return false; // Index out of range
-  auto end_states = transitions_[begin][symbol - 'a'];
+  auto& end_states = transitions_[begin][symbol - 'a'];
   auto pos = std::upper_bound(end_states.begin(), end_states.end(), end);
   if (pos == end_states.begin() || *std::prev(pos, 1) != end)
     transitions_[begin][symbol - 'a'].insert(pos, end);
