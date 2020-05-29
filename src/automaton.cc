@@ -44,14 +44,14 @@ int Automaton::addState(bool initial, bool terminal) {
     *it = -1;
   transitions_.push_back(new_state);
   if (initial)
-    entries_.push_back(nb_states_);
+    entries_.push_back(nb_states_ - 1);
   if (terminal)
-    exits_.push_back(nb_states_);
+    exits_.push_back(nb_states_ - 1);
   return nb_states_;
 }
 
 std::string Automaton::toString() {
-  int padding = 5;
+  int padding = 6;
   int most_digits = int_length(std::max({nb_symbols_, nb_states_, 10}));
   std::string str{};
   str += std::string(most_digits + padding, ' ');
@@ -62,14 +62,14 @@ std::string Automaton::toString() {
   str += '\n';
   for (auto i = transitions_.begin(); i != transitions_.end(); i++) {
     // Display E / S if the current state is an entry (resp. exit):
-    padding = 3;
+    padding = 4;
     int state = std::distance(transitions_.begin(), i);
     if (std::find(entries_.begin(), entries_.end(), state) != entries_.end()) {
       str += 'E';
       padding--;
     }
     if (std::find(exits_.begin(), exits_.end(), state) != exits_.end()) {
-      if (padding == 2) {
+      if (padding == 3) {
         str += "/";
         padding--;
       }
