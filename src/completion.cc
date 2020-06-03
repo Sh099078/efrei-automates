@@ -10,7 +10,9 @@ bool is_complete(Automaton& automaton) {
   return true;
 }
 
-Automaton complete(Automaton& automaton) {
+Automaton complete(const Automaton& original) {
+  //TODO add synchronization and determinization
+  Automaton automaton = original;
   if (is_complete(automaton))
     return automaton;
   int garbage_state = automaton.addState(false, false);

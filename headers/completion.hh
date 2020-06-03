@@ -4,4 +4,4 @@
 
 bool is_complete(Automaton&);
 
-Automaton complete(Automaton&);
+Automaton complete(const Automaton&);
