@@ -2,6 +2,6 @@
 
 #include "automaton.hh"
 
-bool is_determinist(Automaton);
+bool is_determinist(const Automaton&);
 
-Automaton determinize(Automaton);
+Automaton determinize(const Automaton&);

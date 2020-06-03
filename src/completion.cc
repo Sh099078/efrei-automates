@@ -1,6 +1,6 @@
 #include "completion.hh"
 
-bool is_complete(Automaton& automaton) {
+bool is_complete(const Automaton& automaton) {
   auto& transitions = automaton.transitions_;
   for (auto it = transitions.begin(); it != transitions.end(); it++) {
     for (auto jt = (*it).begin(); jt != (*it).end(); jt++)
