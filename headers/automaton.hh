@@ -8,6 +8,7 @@ class Automaton {
     Automaton(int, int, int, std::vector<int>, std::vector<int>,
         std::vector<std::vector<std::vector<int>>>);
     Automaton(int symbols);
+    Automaton(const Automaton&); // copy constructor
     bool addTransition(int begin, char symbol, int end);
     bool removeTransition(int begin, char symbol, int end);
     int addState(bool, bool);

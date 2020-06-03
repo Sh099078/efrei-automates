@@ -18,6 +18,15 @@ Automaton::Automaton(int symbols) {
   transitions_ = std::vector<std::vector<std::vector<int>>>(0);
 }
 
+Automaton::Automaton(const Automaton& automaton) {
+  nb_symbols_ = automaton.nb_symbols_;
+  nb_states_ = automaton.nb_states_;
+  nb_transitions_ = automaton.nb_transitions_;
+  entries_ = automaton.entries_;
+  exits_ = automaton.exits_;
+  transitions_ = automaton.transitions_;
+}
+
 int int_length(int i) {
   return std::to_string(i).length();
 }
