@@ -13,5 +13,8 @@ all: $(EXE)
 $(EXE) : $(SRC)
 	$(CXX) $(CXXFLAGS) -I$(INCLUDE) $^ -o $@
 
+test: $(EXE)
+	if [ $? ]; then ./$(EXE); fi
+
 clean:
 	rm -rf $(EXE) *.o
