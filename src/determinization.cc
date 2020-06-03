@@ -5,7 +5,9 @@ bool is_determinist(const Automaton& automaton) {
   auto& transitions = automaton.transitions_;
   for (auto it = transitions.begin(); it != transitions.end(); it++) {
     for (auto jt = (*it).begin(); jt != (*it).end(); jt++) {
-      if ((*jt).size() > 1)
+      //TODO change nb_symbols_ type to unsigned long int
+      int nb_transitions = (*jt).size();
+      if (0 < nb_transitions && nb_transitions < automaton.nb_symbols_)
         return false;
     }
   }
