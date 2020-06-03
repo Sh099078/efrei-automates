@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++2a -pedantic -Wall -Wextra -g
 VPATH = src
 INCLUDE = headers
 SRC = main.cc automaton.cc read-automaton.cc completion.cc determinization.cc \
-			word-recognition.cc
+			word-recognition.cc complementarization.cc
 EXE = a.out
 
 .PHONY: all clean
