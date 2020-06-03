@@ -7,6 +7,7 @@
 #include "completion.hh"
 #include "word-recognition.hh"
 #include "complementarization.hh"
+#include "determinization.hh"
 
 #define TEAM_NB 24
 
@@ -18,18 +19,27 @@ int main(void) {
       + std::to_string(TEAM_NB) + "-"
       + std::to_string(choice) + ".txt";
     Automaton automaton = readAutomaton(pathname.c_str());
-    //TODO Automaton processing
+    //TODO Automaton processing:
     std::cout << '\n' << automaton.toString() << '\n';
+    // Determinization:
+    bool b_determinist = is_determinist(automaton);
+    std::cout << "Is determinist : " << std::boolalpha << b_determinist << std::endl;
+    std::cout << "Determinization :" << std::endl;
+    Automaton a_determinist = b_determinist ? automaton : determinize(automaton);
+    std::cout << '\n' << a_determinist.toString() << '\n';
+    // Words recognition:
     std::cout << "Type words to recognize separated by whitespaces: ";
     std::string line;
     std::cin >> line;
     std::cout << "word '" << line << "' recognized : " << std::boolalpha
-      << recognize_word(automaton, line) << std::endl;
-    std::cout << "Is complete : " << std::boolalpha << is_complete(automaton) << std::endl;
+      << recognize_word(a_determinist, line) << std::endl;
+    // Completion:
+    bool b_complete = is_complete(a_determinist);
+    std::cout << "Is complete : " << std::boolalpha << b_complete << std::endl;
     std::cout << "Completion : " << std::endl;
-    Automaton a_complete = complete(automaton);
-    //
+    Automaton a_complete = b_complete ? a_determinist : complete(a_determinist);
     std::cout << '\n' << a_complete.toString() << '\n';
+    // Complementarization:
     std::cout << "Complementary automaton : " << std::endl;
     auto a_complementary = complementary(a_complete);
     std::cout << '\n' << a_complementary.toString() << '\n';
