@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstddef>
 
 #include "read-automaton.hh"
 #include "automaton.hh"
@@ -30,9 +31,15 @@ int main(void) {
     // Words recognition:
     std::cout << "Type words to recognize separated by whitespaces: ";
     std::string line;
-    std::cin >> line;
-    std::cout << "word '" << line << "' recognized : " << std::boolalpha
-      << recognize_word(a_determinist, line) << std::endl;
+    std::cin.ignore();
+    std::getline(std::cin, line);
+    std::string word;
+    std::stringstream stream(line);
+    while(stream >> word) {
+      word = word == "''" ? "" : word;
+      std::cout << "word '" << word << "' recognized : " << std::boolalpha
+        << recognize_word(a_determinist, word) << std::endl;
+    }
     // Completion:
     bool b_complete = is_complete(a_determinist);
     std::cout << "Is complete : " << std::boolalpha << b_complete << std::endl;
