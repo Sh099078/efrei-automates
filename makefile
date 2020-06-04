@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++2a -pedantic -Wall -Wextra -g
+CXXFLAGS = -std=c++2a -pedantic -Wall -Werror -Wextra -g
 VPATH = src
 INCLUDE = headers
 SRC = main.cc automaton.cc read-automaton.cc completion.cc determinization.cc \
@@ -14,7 +14,15 @@ $(EXE) : $(SRC)
 	$(CXX) $(CXXFLAGS) -I$(INCLUDE) $^ -o $@
 
 test: $(EXE)
-	if [ $? ]; then ./$(EXE); fi
+	./$<
+
+debug: $(EXE)
+	gdb ./$<
+
+leaks: $(EXE)
+	valgrind ./$<
+
+
 
 clean:
 	rm -rf $(EXE) *.o
